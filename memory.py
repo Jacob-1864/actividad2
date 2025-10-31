@@ -11,12 +11,11 @@ Exercises:
 
 from random import *
 from turtle import *
-
 from freegames import path
 
 car = path('car.gif')
 tiles = list('🍎🍌🍇🍉🍓🍒🍍🥝🍋🍊🍑🍐🍈🍏🍅🥥🍆🥦🥕🌽🥔🍄🍔🍕🍟🍗🍩🍪🍰🍫🍬🍭') * 2
-state = {'mark': None, 'taps': 0}
+state = {'mark': None, 'taps': 0, 'won': False}
 hide = [True] * 64
 
 def square(x, y):
@@ -42,6 +41,11 @@ def xy(count):
 def tap(x, y):
     """Update mark and hidden tiles based on tap."""
     spot = index(x, y)
+
+    # Evita errores si haces clic fuera del tablero
+    if not 0 <= spot < len(tiles):
+        return
+
     mark = state['mark']
 
     if hide[spot]:
@@ -54,13 +58,10 @@ def tap(x, y):
         hide[mark] = False
         state['mark'] = None
     
+    # Marca victoria sin dibujar aquí
     if all(not h for h in hide):
-        
-        up()
-        goto(0, 0)
-        color('green')
-        write("¡Juego completado! 🎉", align="center", font=('Arial', 25, 'bold'))
-        onscreenclick(None)
+        state['won'] = True
+        onscreenclick(None)  # desactiva más clics
 
 def draw():
     """Draw image and tiles."""
@@ -79,14 +80,24 @@ def draw():
     if mark is not None and hide[mark]:
         x, y = xy(mark)
         up()
-        goto(x + 25, y)
+        goto(x + 25, y)  # centrado horizontal del emoji
         color('black')
         write(tiles[mark], align="center", font=('Arial', 30, 'normal'))
 
+    # Contador de taps
     up()
-    goto(-180,-190)
+    goto(-180, -190)
     color('blue')
     write(f'Taps: {state["taps"]}', font=('Arial', 18, 'bold'))
+
+    # Si ganó, muestra el mensaje y detén el loop
+    if state['won']:
+        up()
+        goto(0, 0)
+        color('green')
+        write("¡Juego completado! 🎉", align="center", font=('Arial', 25, 'bold'))
+        update()
+        return
 
     update()
     ontimer(draw, 100)
