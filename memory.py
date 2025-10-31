@@ -51,7 +51,7 @@ def tap(x, y):
 
     spot = index(x, y)
     mark = state['mark']
-    
+
     if hide[spot]:
         state['taps'] += 1
 
@@ -88,10 +88,10 @@ def draw():
     if mark is not None and hide[mark]:
         x, y = xy(mark)
         up()
-        goto(x + square_size/4, y + square_size/8)
+        goto(x + 25, y)
         color('black')
-        write(tiles[mark], font=('Arial', 30, 'normal'))
-    
+        write(tiles[mark], align="center", font=('Arial', 30, 'normal'))
+
     up()
     goto(-2*square_size + 10, -2*square_size - 30)
     color('blue')
@@ -112,3 +112,4 @@ tracer(False)
 onscreenclick(tap)
 draw()
 done()
+
