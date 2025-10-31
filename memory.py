@@ -16,9 +16,8 @@ from freegames import path
 
 car = path('car.gif')
 tiles = list('🍎🍌🍇🍉🍓🍒🍍🥝🍋🍊🍑🍐🍈🍏🍅🥥🍆🥦🥕🌽🥔🍄🍔🍕🍟🍗🍩🍪🍰🍫🍬🍭') * 2
-state = {'mark': None, 'taps': 0, 'game_over': False}
+state = {'mark': None, 'taps': 0}
 hide = [True] * 64
-
 
 def square(x, y):
     """Draw white square with black outline at (x, y)."""
@@ -32,23 +31,16 @@ def square(x, y):
         left(90)
     end_fill()
 
-
 def index(x, y):
     """Convert (x, y) coordinates to tiles index."""
     return int((x + 200) // 50 + ((y + 200) // 50) * 8)
-
 
 def xy(count):
     """Convert tiles count to (x, y) coordinates."""
     return (count % 8) * 50 - 200, (count // 8) * 50 - 200
 
-
 def tap(x, y):
     """Update mark and hidden tiles based on tap."""
-    
-    if state['game_over']
-	return
-
     spot = index(x, y)
     mark = state['mark']
 
@@ -63,8 +55,7 @@ def tap(x, y):
         state['mark'] = None
     
     if all(not h for h in hide):
-
-        state['game_over'] = True
+        
         up()
         goto(0, 0)
         color('green')
@@ -93,13 +84,9 @@ def draw():
         write(tiles[mark], align="center", font=('Arial', 30, 'normal'))
 
     up()
-    goto(-2*square_size + 10, -2*square_size - 30)
+    goto(-180,-190)
     color('blue')
     write(f'Taps: {state["taps"]}', font=('Arial', 18, 'bold'))
-
-    if not state['game_over']:
-        update()
-        ontimer(draw, 100)
 
     update()
     ontimer(draw, 100)
@@ -112,4 +99,3 @@ tracer(False)
 onscreenclick(tap)
 draw()
 done()
-
