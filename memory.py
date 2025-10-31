@@ -47,7 +47,7 @@ def tap(x, y):
     """Update mark and hidden tiles based on tap."""
     spot = index(x, y)
     mark = state['mark']
-    
+
     if hide[spot]:
         state['taps'] += 1
 
@@ -76,10 +76,10 @@ def draw():
     if mark is not None and hide[mark]:
         x, y = xy(mark)
         up()
-        goto(x + 2, y)
+        goto(x + 25, y)
         color('black')
-        write(tiles[mark], font=('Arial', 30, 'normal'))
-    
+        write(tiles[mark], align="center", font=('Arial', 30, 'normal'))
+
     up()
     goto(-180,-190)
     color('blue')
@@ -103,3 +103,4 @@ tracer(False)
 onscreenclick(tap)
 draw()
 done()
+
