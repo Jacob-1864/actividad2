@@ -57,7 +57,13 @@ def tap(x, y):
         hide[spot] = False
         hide[mark] = False
         state['mark'] = None
-
+    
+    if all(not hidden for hidden in hide):
+        up()
+        goto(-50, 0)
+        color('green')
+        write("¡Juego completado! 🎉", font=('Arial', 18, 'bold'))
+        update()
 
 def draw():
     """Draw image and tiles."""
@@ -87,13 +93,6 @@ def draw():
 
     update()
     ontimer(draw, 100)
-
-if all(not hidden for hidden in hide):
-        up()
-        goto(-50, 0)
-        color('green')
-        write("¡Juego completado! 🎉", font=('Arial', 18, 'bold'))
-        update()
 
 shuffle(tiles)
 setup(420, 420, 370, 0)
