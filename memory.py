@@ -16,7 +16,7 @@ from freegames import path
 
 car = path('car.gif')
 tiles = list('🍎🍌🍇🍉🍓🍒🍍🥝🍋🍊🍑🍐🍈🍏🍅🥥🍆🥦🥕🌽🥔🍄🍔🍕🍟🍗🍩🍪🍰🍫🍬🍭') * 2
-state = {'mark': None, 'taps': 0}
+state = {'mark': None, 'taps': 0, 'game_over': False}
 hide = [True] * 64
 
 
@@ -45,6 +45,10 @@ def xy(count):
 
 def tap(x, y):
     """Update mark and hidden tiles based on tap."""
+    
+    if state['game_over']
+	return
+
     spot = index(x, y)
     mark = state['mark']
 
@@ -59,7 +63,8 @@ def tap(x, y):
         state['mark'] = None
     
     if all(not h for h in hide):
-        
+
+        state['game_over'] = True
         up()
         goto(0, 0)
         color('green')
@@ -88,9 +93,13 @@ def draw():
         write(tiles[mark], align="center", font=('Arial', 30, 'normal'))
 
     up()
-    goto(-180,-190)
+    goto(-2*square_size + 10, -2*square_size - 30)
     color('blue')
     write(f'Taps: {state["taps"]}', font=('Arial', 18, 'bold'))
+
+    if not state['game_over']:
+        update()
+        ontimer(draw, 100)
 
     update()
     ontimer(draw, 100)
