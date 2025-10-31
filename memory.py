@@ -58,12 +58,13 @@ def tap(x, y):
         hide[mark] = False
         state['mark'] = None
     
-    if all(not hidden for hidden in hide):
+    if all(not h for h in hide):
+        
         up()
-        goto(-50, 0)
+        goto(0, 0)
         color('green')
-        write("¡Juego completado! 🎉", font=('Arial', 18, 'bold'))
-        update()
+        write("¡Juego completado! 🎉", align="center", font=('Arial', 25, 'bold'))
+        onscreenclick(None)
 
 def draw():
     """Draw image and tiles."""
